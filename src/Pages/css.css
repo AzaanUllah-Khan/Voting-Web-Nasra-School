@@ -1,0 +1,12 @@
+.row{
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+button.vote{
+    margin: 50px auto 0;
+    display: block;
+    padding: 10px 15px;
+}
