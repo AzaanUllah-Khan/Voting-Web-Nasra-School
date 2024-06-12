@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './Image.css';
 
-const ImageComp = ({ img, name }) => {
+const ImageComp = ({ img, name, onImageSelect }) => {
   const [selected, setSelected] = useState(false);
 
   const handleClick = () => {
     setSelected(!selected);
+    onImageSelect(!selected); // Notify parent component about the selection change
   };
 
   return (
