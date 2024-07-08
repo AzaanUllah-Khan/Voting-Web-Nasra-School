@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { getFirestore,collection,query, getDocs } from "firebase/firestore";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAjo_rlqi6WBtUilCApLBKCgajQw0EKKI4",
   authDomain: "school-voting-652eb.firebaseapp.com",
@@ -10,4 +11,6 @@ const firebaseConfig = {
   measurementId: "G-6CCTKLD44S"
 };
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const db = getFirestore(app);
+
+export {app,db,initializeApp,getDocs,query,getFirestore,collection}

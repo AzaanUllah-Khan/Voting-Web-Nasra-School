@@ -6,6 +6,7 @@ import './css.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { query, getDocs, db,collection } from '../assets/Firebase/Firebase';
 
 const Headboy = () => {
   const [isImageSelected, setIsImageSelected] = useState(false);
@@ -18,7 +19,15 @@ const Headboy = () => {
   function next() {
     navigate('/headgirl');
   }
+  const getData = async () => {
+    const q = query(collection(db, "Headboy"));
 
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, " => ", doc.data());
+    });
+  }
+  getData()
   return (
     <div>
       <Navbar />
