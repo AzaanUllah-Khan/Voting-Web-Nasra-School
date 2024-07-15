@@ -10,12 +10,12 @@ import { query, getDocs, db, collection } from '../assets/Firebase/Firebase';
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const DepHeadboy = () => {
-  const [isImageSelected, setIsImageSelected] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
-  const handleImageSelect = (selected) => {
-    setIsImageSelected(selected);
+  const handleImageSelect = (index) => {
+    setSelectedImageIndex(index);
   };
 
   const next = () => {
@@ -30,8 +30,8 @@ const DepHeadboy = () => {
       const storage = getStorage();
 
       const promises = querySnapshot.docs.map(async (doc) => {
-        const symbol = doc.data().Symbol;
         const name = doc.data().Name;
+        const symbol = doc.data().Symbol;
         const imageRef = ref(storage, `Deputy Headboy/${name}`);
         const img = await getDownloadURL(imageRef);
         return {
@@ -58,11 +58,12 @@ const DepHeadboy = () => {
             img={item.img}
             name={item.name}
             symbol={item.symbol}
-            onImageSelect={handleImageSelect}
+            isSelected={index === selectedImageIndex}
+            onClick={() => handleImageSelect(index)}
           />
         ))}
       </div>
-      <button className='vote' onClick={next} disabled={!isImageSelected}>
+      <button className='vote' onClick={next} disabled={selectedImageIndex === null}>
         Confirm Your Vote <FontAwesomeIcon icon={faArrowRight} />
       </button>
     </div>
