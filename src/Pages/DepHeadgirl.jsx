@@ -30,11 +30,13 @@ const DepHeadgirl = () => {
       const storage = getStorage();
 
       const promises = querySnapshot.docs.map(async (doc) => {
+        const symbol = doc.data().Symbol;
         const name = doc.data().Name;
         const imageRef = ref(storage, `Deputy Headgirl/${name}`);
         const img = await getDownloadURL(imageRef);
         return {
           name,
+          symbol,
           img,
         };
       });
@@ -55,6 +57,7 @@ const DepHeadgirl = () => {
             key={index}
             img={item.img}
             name={item.name}
+            symbol={item.symbol}
             onImageSelect={handleImageSelect}
           />
         ))}

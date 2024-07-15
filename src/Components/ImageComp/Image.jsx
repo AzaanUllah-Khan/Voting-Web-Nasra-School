@@ -1,18 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Image.css';
 
-const ImageComp = ({ img, name, onImageSelect }) => {
-  const [selected, setSelected] = useState(false);
-
-  const handleClick = () => {
-    setSelected(!selected);
-    onImageSelect(!selected); // Notify parent component about the selection change
-  };
-
+const ImageComp = ({ img, name, symbol, isSelected, onClick }) => {
   return (
-    <div className={`imgComp ${selected ? 'selected' : ''}`} onClick={handleClick}>
+    <div className={`imgComp ${isSelected ? 'selected' : ''}`} onClick={onClick}>
       <img src={img} className='imgCompImage' alt={name} />
       <h3 className='candidateName'>{name}</h3>
+      <p className='symbolName'>{symbol}</p>
     </div>
   );
 };
