@@ -6,7 +6,7 @@ import './css.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import { query, getDocs, db, collection } from '../assets/Firebase/Firebase';
+import { query, getDocs, db, collection, doc, updateDoc, increment } from '../assets/Firebase/Firebase';
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const Headgirl = () => {
@@ -18,8 +18,15 @@ const Headgirl = () => {
     setSelectedImageIndex(index);
   };
 
-  const next = () => {
-    navigate('/depheadboy');
+  const next = async () => {
+    if (selectedImageIndex !== null) {
+      const selectedCandidate = data[selectedImageIndex];
+      const candidateDoc = doc(db, "Headgirl", selectedCandidate.name);
+      await updateDoc(candidateDoc, {
+        votes: increment(1)
+      });
+      navigate('/depheadboy');
+    }
   };
 
   useEffect(() => {
@@ -35,9 +42,11 @@ const Headgirl = () => {
         const imageRef = ref(storage, `Headgirl/${name}`);
         const img = await getDownloadURL(imageRef);
         return {
+          id: doc.id,
           name,
           symbol,
           img,
+          votes: doc.data().votes || 0
         };
       });
 
