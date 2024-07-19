@@ -12,6 +12,8 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 const Headboy = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
 
   const handleImageSelect = (index) => {
@@ -33,7 +35,6 @@ const Headboy = () => {
     const getData = async () => {
       const q = query(collection(db, "Headboy"));
       const querySnapshot = await getDocs(q);
-      const dataArray = [];
       const storage = getStorage();
 
       const promises = querySnapshot.docs.map(async (doc) => {
@@ -52,6 +53,7 @@ const Headboy = () => {
 
       const results = await Promise.all(promises);
       setData(results);
+      setLoading(false);
     };
     getData();
   }, []);
@@ -61,16 +63,21 @@ const Headboy = () => {
       <Navbar />
       <Heading post="Head Boy" />
       <div className='row'>
-        {data.map((item, index) => (
-          <ImageComp
-            key={index}
-            img={item.img}
-            name={item.name}
-            symbol={item.symbol}
-            isSelected={index === selectedImageIndex}
-            onClick={() => handleImageSelect(index)}
-          />
-        ))}
+        {loading
+          ? Array.from({ length: 4 }).map((_, index) => (
+              <ImageComp key={index} isLoading={true} />
+            ))
+          : data.map((item, index) => (
+              <ImageComp
+                key={index}
+                img={item.img}
+                name={item.name}
+                symbol={item.symbol}
+                isSelected={index === selectedImageIndex}
+                onClick={() => handleImageSelect(index)}
+                isLoading={false}
+              />
+            ))}
       </div>
       <button className='vote' onClick={next} disabled={selectedImageIndex === null}>
         Confirm Your Vote <FontAwesomeIcon icon={faArrowRight} />
