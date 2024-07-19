@@ -14,7 +14,7 @@ const Form = () => {
         navigate("/headboy");
     }
     function check(){
-        if(document.getElementById('Name').value != "" && document.getElementById('ID').value != "" && document.getElementById('Class').value != ""){
+        if(document.getElementById('Authentication').value != ""){
             setDis(false)
             }
             else{
@@ -25,9 +25,7 @@ const Form = () => {
         <div className="inputs">
             <div className="form">
                 <h2>Enter Your Details</h2>
-                <Input onChange={check} id="Name" placeholder="Enter Your Name"/>
-                <Input onChange={check} id="ID" placeholder="Enter Your ID" />
-                <Input onChange={check} id="Class" placeholder="Enter Your Class" />
+                <Input onChange={check} id="Authentication" placeholder="Enter Your GR Number"/>
                 <button className='login' onClick={headboy} disabled={dis}>Login <FontAwesomeIcon icon={faRightToBracket} /></button>
             </div>
         </div>
