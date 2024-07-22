@@ -13,7 +13,7 @@ const Finish = () => {
     <Result
     icon={<SmileOutlined />}
     title="Great, we have done all the operations!"
-    extra={<Button type="primary" onClick={nav}>Next</Button>}/>
+    extra={<Button type="primary" onClick={nav}>DONE</Button>}/>
     </div>
   )
 }
