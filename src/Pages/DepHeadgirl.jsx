@@ -13,6 +13,7 @@ const DepHeadgirl = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
 
@@ -22,6 +23,7 @@ const DepHeadgirl = () => {
 
   const next = async () => {
     if (selectedImageIndex !== null) {
+      setIsSubmitting(true);
       const selectedCandidate = data[selectedImageIndex];
       const candidateDoc = doc(db, "Deputy Headgirl", selectedCandidate.name);
       await updateDoc(candidateDoc, {
@@ -79,8 +81,13 @@ const DepHeadgirl = () => {
               />
             ))}
       </div>
-      <button className='vote' onClick={next} disabled={selectedImageIndex === null}>
-        Confirm Your Vote <FontAwesomeIcon icon={faArrowRight} />
+      <button 
+        className='vote' 
+        id='btn' 
+        onClick={next} 
+        disabled={selectedImageIndex === null || isSubmitting}
+      >
+        {isSubmitting ? 'Submitting...' : 'Confirm Your Vote'} <FontAwesomeIcon icon={faArrowRight} />
       </button>
     </div>
   );
