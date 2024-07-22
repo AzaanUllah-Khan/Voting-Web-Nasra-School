@@ -13,6 +13,7 @@ const Headboy = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Add this state
 
   const navigate = useNavigate();
 
@@ -21,7 +22,8 @@ const Headboy = () => {
   };
 
   const next = async () => {
-    if (selectedImageIndex !== null) {
+    if (selectedImageIndex !== null && !isSubmitting) {
+      setIsSubmitting(true); // Disable the button
       const selectedCandidate = data[selectedImageIndex];
       const candidateDoc = doc(db, "Headboy", selectedCandidate.name);
       await updateDoc(candidateDoc, {
@@ -79,8 +81,13 @@ const Headboy = () => {
               />
             ))}
       </div>
-      <button className='vote' onClick={next} disabled={selectedImageIndex === null}>
-        Confirm Your Vote <FontAwesomeIcon icon={faArrowRight} />
+      <button 
+        className='vote' 
+        id='btn' 
+        onClick={next} 
+        disabled={selectedImageIndex === null || isSubmitting} // Disable button if no selection or submitting
+      >
+        {isSubmitting ? 'Submitting...' : 'Confirm Your Vote'} <FontAwesomeIcon icon={faArrowRight} />
       </button>
     </div>
   );
