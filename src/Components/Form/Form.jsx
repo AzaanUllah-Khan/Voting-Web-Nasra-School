@@ -14,7 +14,7 @@ const Form = () => {
         navigate("/headboy");
     }
     function check(){
-        if(document.getElementById('Authentication').value.length == 6){
+        if(document.getElementById('Authentication').value.length == 7){
             setDis(false)
             }
             else{
